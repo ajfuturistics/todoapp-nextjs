@@ -1,17 +1,5 @@
-import {
-  types,
-  destroy,
-  Instance,
-  onSnapshot,
-  applySnapshot,
-} from "mobx-state-tree";
+import { types, destroy, Instance, onSnapshot } from "mobx-state-tree";
 
-interface PropData {
-  id: string;
-  Title: string;
-  Description: string;
-  Status: string;
-}
 const Todo = types.model({
   id: types.identifier,
   Title: types.string,
@@ -24,7 +12,7 @@ export const RootStore = types
     todos: types.array(Todo),
   })
   .actions((self) => ({
-    addTodo(todo: PropData) {
+    addTodo(todo: TodoData) {
       self.todos.unshift(todo);
     },
     removeTodo(todo: Instance<typeof Todo>) {

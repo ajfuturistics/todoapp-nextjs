@@ -1,6 +1,6 @@
 "use client";
 import { TodoType, useTodosStore } from "@/store/store";
-import React, { useRef, useState } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 
 interface Props {
   hideModal: () => void;
@@ -17,8 +17,8 @@ const Modal = ({ hideModal, Type = "Add", todo }: Props) => {
     }
   );
 
-  const handleSubmit = () => {
-    console.log(todo);
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
 
     if (data.Title === "" || data.Description === "" || data.Status === "") {
       alert("Fill all fields");
@@ -46,7 +46,10 @@ const Modal = ({ hideModal, Type = "Add", todo }: Props) => {
       className="absolute z-10 overflow-y-auto top-0 w-full left-0"
       // id="modal"
     >
-      <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <form
+        onSubmit={handleSubmit}
+        className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+      >
         <div className="fixed inset-0 transition-opacity">
           <div className="absolute inset-0 bg-gray-900 opacity-75" />
         </div>
@@ -74,6 +77,7 @@ const Modal = ({ hideModal, Type = "Add", todo }: Props) => {
               onChange={(e) =>
                 setData((prev) => ({ ...prev, Title: e.target.value }))
               }
+              required
             />
             <label className="font-medium text-gray-800">
               Description ({data?.Description.length}/150)
@@ -85,6 +89,7 @@ const Modal = ({ hideModal, Type = "Add", todo }: Props) => {
               onChange={(e) =>
                 setData((prev) => ({ ...prev, Description: e.target.value }))
               }
+              required
             />
             <label className="font-medium text-gray-800">Status</label>
             <select
@@ -93,6 +98,7 @@ const Modal = ({ hideModal, Type = "Add", todo }: Props) => {
               onChange={(e) =>
                 setData((prev) => ({ ...prev, Status: e.target.value }))
               }
+              required
             >
               <option value="">Select Status</option>
               <option value="To Do">To Do</option>
@@ -109,15 +115,14 @@ const Modal = ({ hideModal, Type = "Add", todo }: Props) => {
               Cancel
             </button>
             <button
-              type="button"
+              type="submit"
               className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700 mr-2"
-              onClick={handleSubmit}
             >
               {Type}
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
