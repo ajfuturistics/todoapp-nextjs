@@ -20,7 +20,11 @@ const Modal = ({ hideModal, Type = "Add", todo }: Props) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (data.Title === "" || data.Description === "" || data.Status === "") {
+    if (
+      data.Title.trim() === "" ||
+      data.Description.trim() === "" ||
+      data.Status.trim() === ""
+    ) {
       alert("Fill all fields");
       return;
     }
@@ -45,7 +49,7 @@ const Modal = ({ hideModal, Type = "Add", todo }: Props) => {
     <div className="absolute z-10 overflow-y-auto top-0 w-full left-0">
       <form
         onSubmit={handleSubmit}
-        className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+        className="flex items-center justify-center min-h-screen pt-4 px-4 text-center sm:block sm:p-0"
       >
         <div className="fixed inset-0 transition-opacity">
           <div className="absolute inset-0 bg-gray-900 opacity-75" />
@@ -70,6 +74,7 @@ const Modal = ({ hideModal, Type = "Add", todo }: Props) => {
               type="text"
               className="w-full outline-none rounded bg-gray-100 p-2 mt-2 mb-3"
               maxLength={50}
+              minLength={3}
               value={data.Title}
               onChange={(e) =>
                 setData((prev) => ({ ...prev, Title: e.target.value }))
@@ -82,6 +87,7 @@ const Modal = ({ hideModal, Type = "Add", todo }: Props) => {
             <textarea
               className="w-full outline-none rounded bg-gray-100 p-2 mt-2 mb-3"
               maxLength={150}
+              minLength={3}
               value={data?.Description}
               onChange={(e) =>
                 setData((prev) => ({ ...prev, Description: e.target.value }))
