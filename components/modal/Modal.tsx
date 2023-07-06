@@ -63,19 +63,24 @@ const Modal = ({ hideModal, Type = "Add", todo }: Props) => {
             {Type}
           </h2>
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <label className="font-medium text-gray-800">Title</label>
+            <label className="font-medium text-gray-800">
+              Title ({data?.Title.length}/50)
+            </label>
             <input
               type="text"
               className="w-full outline-none rounded bg-gray-100 p-2 mt-2 mb-3"
+              maxLength={50}
               value={data.Title}
               onChange={(e) =>
                 setData((prev) => ({ ...prev, Title: e.target.value }))
               }
             />
-            <label className="font-medium text-gray-800">Description</label>
+            <label className="font-medium text-gray-800">
+              Description ({data?.Description.length}/150)
+            </label>
             <textarea
               className="w-full outline-none rounded bg-gray-100 p-2 mt-2 mb-3"
-              maxLength={300}
+              maxLength={150}
               value={data?.Description}
               onChange={(e) =>
                 setData((prev) => ({ ...prev, Description: e.target.value }))

@@ -1,4 +1,10 @@
-import { types, destroy, Instance } from "mobx-state-tree";
+import {
+  types,
+  destroy,
+  Instance,
+  onSnapshot,
+  applySnapshot,
+} from "mobx-state-tree";
 
 interface PropData {
   id: string;
@@ -34,11 +40,20 @@ interface TodosStoreType extends Instance<typeof RootStore> {}
 export interface TodoType extends Instance<typeof Todo> {}
 
 let _todosStore: TodosStoreType;
+
 export const useTodosStore = () => {
   if (!_todosStore) {
     _todosStore = RootStore.create({
       todos: [],
     });
+
+    // to fix localStorage undefined issue
+    if (typeof window !== "undefined") {
+      // updating store in localStorage when state changes
+      onSnapshot(_todosStore, (snapshot) => {
+        localStorage.setItem("store", JSON.stringify(snapshot));
+      });
+    }
   }
 
   return _todosStore;

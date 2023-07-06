@@ -17,7 +17,7 @@ const TodoCard = ({ todo }: Props) => {
 
   return (
     <>
-      <div className="flex-1 rounded-lg border border-gray-300 bg-white/20 p-6 pb-4 w-full h-fit">
+      <div className="flex-1 rounded-lg border border-gray-300 bg-white/20 p-6 pb-4 w-full h-full">
         <p className="text-sm text-gray-600">id: {todo?.id}</p>
         <h3 className="font-semibold text-gray-900">{todo.Title}</h3>
 
@@ -25,13 +25,15 @@ const TodoCard = ({ todo }: Props) => {
         <p className="text-sm cursor-pointer">Status: {todo.Status}</p>
 
         <div className="mt-5 flex justify-center items-center gap-4 border-t border-gray-100 pt-3">
-          <button
-            onClick={() => setOpen((prev) => !prev)}
-            type="button"
-            className="text-sm cursor-pointer text-green-600"
-          >
-            Update
-          </button>
+          {todo.Status !== "Completed" && (
+            <button
+              onClick={() => setOpen((prev) => !prev)}
+              type="button"
+              className="text-sm cursor-pointer text-green-600"
+            >
+              Update
+            </button>
+          )}
           <button
             onClick={() => removeTodo(todo)}
             type="button"
