@@ -7,6 +7,8 @@ const Todo = types.model({
   Status: types.string,
 });
 
+export interface TodoType extends Instance<typeof Todo> {}
+
 export const RootStore = types
   .model({
     todos: types.array(Todo),
@@ -15,17 +17,16 @@ export const RootStore = types
     addTodo(todo: TodoData) {
       self.todos.unshift(todo);
     },
-    removeTodo(todo: Instance<typeof Todo>) {
+    removeTodo(todo: TodoType) {
       destroy(todo);
     },
-    editTodo(newData: Instance<typeof Todo>) {
+    editTodo(newData: TodoType) {
       const todoIndex = self.todos.findIndex((todo) => todo.id === newData.id);
       self.todos[todoIndex] = newData;
     },
   }));
 
 interface TodosStoreType extends Instance<typeof RootStore> {}
-export interface TodoType extends Instance<typeof Todo> {}
 
 let _todosStore: TodosStoreType;
 
